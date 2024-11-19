@@ -17,6 +17,7 @@ variable "AWS_REGIONS_INDEX" {
     condition     = can(regex("^(1|2|3|4)$", var.AWS_REGIONS_INDEX))
     error_message = "Please enter a value between 1 and 4"
   }
+  default = 2
 }
 
 
@@ -115,12 +116,14 @@ variable "instance_names" {
 variable "EC2_iam_role" {
   type        = string
   description = "EC2 IAM role to be used"
+  default = "Ec2AdminRole"
 }
 
 
 variable "Key_Pair_Name" {
   type        = string
   description = "Your key pair file name"
+  default = "mykeypair"
 }
 
 # variable "Key_Pair_File_Path" {
