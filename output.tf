@@ -32,13 +32,14 @@ output "AMI_maven_jenkins_ansible" {
   value = var.ami[var.AVAILABLE_REGIONS[var.AWS_REGIONS_INDEX]].maven_jenkins_ansible
 }
 
-output "AMI_nexus" {
-  value = var.ami[var.AVAILABLE_REGIONS[var.AWS_REGIONS_INDEX]].nexus
-}
-
 output "AMI_sonarqube" {
   value = var.ami[var.AVAILABLE_REGIONS[var.AWS_REGIONS_INDEX]].sonarqube
 }
+
+/* output "AMI_nexus" {
+  value = var.ami[var.AVAILABLE_REGIONS[var.AWS_REGIONS_INDEX]].nexus
+}
+ */
 
 /*
 output "AMI_prometheus" {
@@ -58,13 +59,14 @@ output "Instant_Type_maven_jenkins_ansible" {
   value = lookup(var.InstanceType, "maven_jenkins_ansible")
 }
 
-output "Instant_Type_Nexus" {
-  value = lookup(var.InstanceType, "nexus")
-}
-
 output "Instant_Type_Sonarqube" {
   value = lookup(var.InstanceType, "sonarqube")
 }
+
+/* output "Instant_Type_Nexus" {
+  value = lookup(var.InstanceType, "nexus")
+} */
+
 
 /*
 output "Instant_Type_Prometheus" {
@@ -81,5 +83,5 @@ output "Instant_Type_Environment" {
 */
 
 output "Key_Pair_Name" {
-  value = "~/.ssh/${var.Key_Pair_Name}.pub"
+  value = var.Key_Pair_Name
 }

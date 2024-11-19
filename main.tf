@@ -4,10 +4,10 @@
 
 # Key Pair resource
 
-resource "aws_key_pair" "Key_pair" {
-  key_name   = "key_pair_name"
-  public_key = file("~/.ssh/${var.Key_Pair_Name}.pub")
-}
+# resource "aws_key_pair" "Key_pair" {
+#   key_name   = "key_pair_name"
+#   public_key = file("~/.ssh/${var.Key_Pair_Name}.pub")
+# }
 
 # ec2 Instance for the maven_jenkins_ansible Server
 
@@ -17,7 +17,8 @@ resource "aws_instance" "maven_jenkins_ansible-Server" {
   subnet_id              = aws_subnet.Public-Subnet-Jenkins-JavaApp-CICD.id
   vpc_security_group_ids = ["${aws_security_group.maven_jenkins_ansible-SG.id}"]
   iam_instance_profile   = var.EC2_iam_role
-  key_name               = aws_key_pair.Key_pair.key_name
+  //key_name = var.Key_Pair_Name
+  //key_name               = aws_key_pair.Key_pair.key_name
 
   user_data = <<-EOF
               #!/bin/bash
@@ -33,29 +34,6 @@ resource "aws_instance" "maven_jenkins_ansible-Server" {
   //depends_on = [aws_instance.Nexus-Server, aws_instance.Sonarqube-Server, aws_instance.Prometheus-Server, aws_instance.Grafana-Server, aws_instance.my_instances]
 }
 
-
-# ec2 Instance for the Nexus Server
-
-resource "aws_instance" "Nexus-Server" {
-  ami                    = var.ami[var.AVAILABLE_REGIONS[var.AWS_REGIONS_INDEX]].nexus
-  instance_type          = lookup(var.InstanceType, "nexus")
-  subnet_id              = aws_subnet.Public-Subnet-Jenkins-JavaApp-CICD.id
-  vpc_security_group_ids = ["${aws_security_group.Nexus-SG.id}"]
-  iam_instance_profile   = var.EC2_iam_role
-  key_name               = aws_key_pair.Key_pair.key_name
-
-  user_data = <<-EOF
-              #!/bin/bash
-              ${file("scripts/nexus-install.sh")}
-              ${file("scripts/install-node-exporter.sh")}
-              EOF
-
-  tags = {
-    Name = lookup(var.ServerNames, "nexus")
-  }
-}
-
-
 # ec2 Instance for the Sonarqube Server
 
 resource "aws_instance" "Sonarqube-Server" {
@@ -64,7 +42,8 @@ resource "aws_instance" "Sonarqube-Server" {
   subnet_id              = aws_subnet.Public-Subnet-Jenkins-JavaApp-CICD.id
   vpc_security_group_ids = ["${aws_security_group.Sonarqube-SG.id}"]
   iam_instance_profile   = var.EC2_iam_role
-  key_name               = aws_key_pair.Key_pair.key_name
+  //key_name = var.Key_Pair_Name
+  //key_name               = aws_key_pair.Key_pair.key_name
 
   user_data = <<-EOF
               #!/bin/bash
@@ -77,6 +56,30 @@ resource "aws_instance" "Sonarqube-Server" {
   }
 }
 
+# ec2 Instance for the Nexus Server
+
+/* resource "aws_instance" "Nexus-Server" {
+  ami                    = var.ami[var.AVAILABLE_REGIONS[var.AWS_REGIONS_INDEX]].nexus
+  instance_type          = lookup(var.InstanceType, "nexus")
+  subnet_id              = aws_subnet.Public-Subnet-Jenkins-JavaApp-CICD.id
+  vpc_security_group_ids = ["${aws_security_group.Nexus-SG.id}"]
+  iam_instance_profile   = var.EC2_iam_role
+  //key_name = var.Key_Pair_Name
+  //key_name               = aws_key_pair.Key_pair.key_name
+
+  user_data = <<-EOF
+              #!/bin/bash
+              ${file("scripts/nexus-install.sh")}
+              ${file("scripts/install-node-exporter.sh")}
+              EOF
+
+  tags = {
+    Name = lookup(var.ServerNames, "nexus")
+  }
+} */
+
+
+
 /*
 # ec2 Instance for the Prometheus Server
 
@@ -86,7 +89,8 @@ resource "aws_instance" "Prometheus-Server" {
   subnet_id              = aws_subnet.Public-Subnet-Jenkins-JavaApp-CICD.id
   vpc_security_group_ids = ["${aws_security_group.Prometheus-SG.id}"]
   iam_instance_profile   = var.EC2_iam_role
-  key_name               = aws_key_pair.Key_pair.key_name
+  //key_name = var.Key_Pair_Name
+  //key_name               = aws_key_pair.Key_pair.key_name
 
   user_data = file("scripts/prometheus.sh")
 
@@ -103,7 +107,8 @@ resource "aws_instance" "Grafana-Server" {
   subnet_id              = aws_subnet.Public-Subnet-Jenkins-JavaApp-CICD.id
   vpc_security_group_ids = ["${aws_security_group.Grafana-SG.id}"]
   iam_instance_profile   = var.EC2_iam_role
-  key_name               = aws_key_pair.Key_pair.key_name
+  //key_name = var.Key_Pair_Name
+  //key_name               = aws_key_pair.Key_pair.key_name
 
   user_data = file("scripts/install-grafana.sh")
 
@@ -121,7 +126,8 @@ resource "aws_instance" "my_instances" {
   subnet_id              = aws_subnet.Public-Subnet-Jenkins-JavaApp-CICD.id
   vpc_security_group_ids = ["${aws_security_group.Env-SG.id}"]
   iam_instance_profile   = var.EC2_iam_role
-  key_name               = aws_key_pair.Key_pair.key_name
+  //key_name = var.Key_Pair_Name
+  //key_name               = aws_key_pair.Key_pair.key_name
 
   user_data = file("scripts/install-node-exporter.sh")
 

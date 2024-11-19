@@ -69,3 +69,14 @@ sudo systemctl start tomcat
 # Change the hostname of the Ec2 Sever
 sudo hostnamectl set-hostname Maven_jenkins_ansible
 
+# Generate RSA key pair
+sudo ssh-keygen -t rsa -b 4096 -f /home/ec2-user/.ssh/id_rsa -P "" 
+
+# Add the key pair to the authorized_keys file
+sudo cat /home/ec2-userssh/id_rsa.pub  >> /home/ec2-user/.ssh/authorized_keys
+
+# Setting ec2-user password
+sudo su
+sudo echo -e "Admin*2020\nAdmin*2020" | passwd ec2-user
+
+#sudo ssh-copy-id -i ~/.ssh/id_rsa.pub ec2-user@3.145.19.102

@@ -17,13 +17,14 @@ variable "AWS_REGIONS_INDEX" {
     condition     = can(regex("^(1|2|3|4)$", var.AWS_REGIONS_INDEX))
     error_message = "Please enter a value between 1 and 4"
   }
-  default = 2
+
+  default = 2 // Insfrastructure will be deployed in us-east-2
 }
 
 
 variable "ami" {
   type = map(object({
-    maven_jenkins_ansible = string //Amazon Linux 2 
+    maven_jenkins_ansible = string //Amazon Linux 2023 
     nexus                 = string //Amazon Linux 2023
     sonarqube             = string //Ubuntu Server 22.04 LTS
     prometheus            = string //Ubuntu Server 22.04 LTS
@@ -35,7 +36,7 @@ variable "ami" {
 
   default = {
     us-east-1 = {
-      maven_jenkins_ansible = "ami-0166fe664262f664c"
+      maven_jenkins_ansible = "ami-063d43db0594b521b"
       nexus                 = "ami-063d43db0594b521b"
       sonarqube             = "ami-005fc0f236362e99f"
       prometheus            = "ami-005fc0f236362e99f"
@@ -43,7 +44,7 @@ variable "ami" {
       env                   = "ami-063d43db0594b521b"
     },
     us-east-2 = {
-      maven_jenkins_ansible = "ami-088d38b423bff245f"
+      maven_jenkins_ansible = "ami-0fae88c1e6794aa17"
       nexus                 = "ami-0fae88c1e6794aa17"
       sonarqube             = "ami-00eb69d236edcfaf8"
       prometheus            = "ami-00eb69d236edcfaf8"
@@ -51,7 +52,7 @@ variable "ami" {
       env                   = "ami-0fae88c1e6794aa17"
     },
     us-west-1 = {
-      maven_jenkins_ansible = "ami-018a1ea25ff5268f0"
+      maven_jenkins_ansible = "ami-05c65d8bb2e35991a"
       nexus                 = "ami-05c65d8bb2e35991a"
       sonarqube             = "ami-0819a8650d771b8be"
       prometheus            = "ami-0819a8650d771b8be"
@@ -60,7 +61,7 @@ variable "ami" {
 
     },
     us-west-2 = {
-      maven_jenkins_ansible = "ami-061dd8b45bc7deb3d"
+      maven_jenkins_ansible = "ami-066a7fbea5161f451"
       nexus                 = "ami-066a7fbea5161f451"
       sonarqube             = "ami-0b8c6b923777519db"
       prometheus            = "ami-0b8c6b923777519db"
@@ -123,7 +124,7 @@ variable "EC2_iam_role" {
 variable "Key_Pair_Name" {
   type        = string
   description = "Your key pair file name"
-  default = "mykeypair"
+  default = "AWSKeyPair"
 }
 
 # variable "Key_Pair_File_Path" {
