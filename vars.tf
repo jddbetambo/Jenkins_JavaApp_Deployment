@@ -44,7 +44,7 @@ variable "ami" {
       env                   = "ami-063d43db0594b521b"
     },
     us-east-2 = {
-      maven_jenkins_ansible = "ami-0fae88c1e6794aa17"
+      maven_jenkins_ansible = "ami-088d38b423bff245f"  #Amazon Linux2  #Amazon Linux 2023: 0fae88c1e6794aa17
       nexus                 = "ami-0fae88c1e6794aa17"
       sonarqube             = "ami-00eb69d236edcfaf8"
       prometheus            = "ami-00eb69d236edcfaf8"
